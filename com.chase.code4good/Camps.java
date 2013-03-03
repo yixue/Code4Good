@@ -11,6 +11,8 @@ public class Camps {
 	String imgURL;
 	Calendar lastModifiedDate;
 	int lastModifiedPerson;
+	double latitude;
+	double longtitude;
 	
 	/**
 	 Setter
@@ -55,6 +57,15 @@ public class Camps {
 		this.lastModifiedPerson = lastModifiedPerson;
 	}
 	
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	
+	public void setLongtitude(double longditude) {
+		this.longtitude = longtitude;
+	}
+	
+	
 	/**Getter*/
 	public int getId() {
 		return id;
@@ -83,4 +94,13 @@ public class Camps {
 	public int getLastModifiedPerson() {
 		return lastModifiedPerson;
 	}
+	
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	public double getLongtitude() {
+		return longtitude;
+	}
+	
 }
