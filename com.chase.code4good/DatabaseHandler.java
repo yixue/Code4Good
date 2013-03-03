@@ -43,7 +43,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_TYPE  + " TEXT," + KEY_BADGE + " TEXT," + KEY_NO_PEOPLE + 
                 " INTEGER," + KEY_LASTMODIFIED_DATE + " TEXT," + KEY_IMAGE_URL + " TEXT," + KEY_LASTMODIFIED_PERSON 
                 + " INTEGER," + " FOREIGN KEY (" + KEY_LASTMODIFIED_PERSON + ")	REFERENCES " + 
-                TABLE_WORKERS + " (" + KEY_WORKER_ID + "))";
+                TABLE_WORKERS + " (" + TABLE_WORKERS + "))";
         db.execSQL(CREATE_CAMPS_TABLE);
     }
 
@@ -66,12 +66,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
-        values.put(KEY_FIRST_DATE, camp.getDate()); 
+        values.put(KEY_FIRST_DATE, camp.getFirstDate().toString()); 
         values.put(KEY_TYPE, camp.getType()); 
         values.put(KEY_BADGE, camp.getBadge()); 
         values.put(KEY_NO_PEOPLE, camp.getNoPeople()); 
-        values.put(KEY_LASTMODIFIED_DATE, camp.getLastModifiedDate()); 
-        values.put(KEY_IMAGE_URL, camp.getImageURL());
+        values.put(KEY_LASTMODIFIED_DATE, camp.getLastModifiedDate().toString()); 
+        values.put(KEY_IMAGE_URL, camp.getImgURL());
         values.put(KEY_LASTMODIFIED_PERSON, camp.getLastModifiedPerson()); 
  
         // Inserting Row
@@ -90,16 +90,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
  
-        Camp camp = new Camp(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),
-                Integer.parseInt(cursor.getString(6)));
+        Camp camp = new Camp();
+        camp.setId(Integer.parseInt(cursor.getString(0)));
+        camp.setFirstDate(cursor.getString(1));
+        camp.setType(cursor.getString(2));
+        camp.setBadge(cursor.getString(3));
+        camp.setNoPeople(Integer.parseInt(cursor.getString(4)));
+        camp.setDateLastModified(cursor.getString(5));
+        camp.setImgURL(cursor.getString(6));
+        camp.setLastModifiedPerson(Integer.parseInt(cursor.getString(7)));
+        
+        
         // return camp
         return camp;
     }
 
     // Getting All Camps
-    public ArrayList<Contact> getAllContacts() {
-        ArrayList<Contact> campList = new ArrayList<Contact>();
+    public ArrayList<Camp> getAllContacts() {
+        ArrayList<Camp> campList = new ArrayList<Camp>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_CAMPS;
  
@@ -110,12 +118,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Camp camp = new Camp();
-                camp.setID(Integer.parseInt(cursor.getString(0)));
-                camp.setDate(cursor.getString(1));
+                camp.setId(Integer.parseInt(cursor.getString(0)));
+                camp.setFirstDate(cursor.getString(1));
                 camp.setType(cursor.getString(2));
                 camp.setBadge(cursor.getString(3));
-                camp.setNoPeople(cursor.getString(4));
-                camp.setLastModifiedDate(cursor.getString(5));
+                camp.setNoPeople(Integer.parseInt(cursor.getString(4)));
+                camp.setDateLastModified(cursor.getString(5));
                 camp.setLastModifiedPerson(Integer.parseInt(cursor.getString(6)));
                 // Adding camp to list
                 campList.add(camp);
@@ -129,22 +137,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
-        values.put(KEY_FIRST_DATE, camp.getDate()); 
+        values.put(KEY_FIRST_DATE, camp.getFirstDate().toString()); 
         values.put(KEY_TYPE, camp.getType()); 
         values.put(KEY_BADGE, camp.getBadge()); 
         values.put(KEY_NO_PEOPLE, camp.getNoPeople()); 
-        values.put(KEY_LASTMODIFIED_DATE, camp.getLastModifiedDate()); 
-        values.put(KEY_IMAGE_URL, camp.getImageURL());
+        values.put(KEY_LASTMODIFIED_DATE, camp.getLastModifiedDate().toString()); 
+        values.put(KEY_IMAGE_URL, camp.getImgURL());
         values.put(KEY_LASTMODIFIED_PERSON, camp.getLastModifiedPerson()); 
         // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+        return db.update(TABLE_CAMPS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(camp.getId()) });
     }
 
     public void deleteCamp(Camp camp) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(camp.getID()) });
+        db.delete(TABLE_CAMPS, KEY_ID + " = ?",
+                new String[] { String.valueOf(camp.getId()) });
         db.close();
     }
 
