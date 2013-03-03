@@ -16,6 +16,13 @@ public class Worker {
 		this._phone = phone;
 	}
 	
+	public Worker(){
+		this._id = 0;
+		this._name = "";
+		this._email = "";
+		this._phone = "";
+	}
+	
 	//Getting ID
 	public int getID(){
 		return this._id;

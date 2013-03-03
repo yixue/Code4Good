@@ -18,6 +18,15 @@ public class Person {
 		this._tags = tags;
 		this._camp = camp;
 	}
+	
+	public Person (){
+		this._id = 0;
+		this._name = "";
+		this._imageurl = "";
+		this._audiourl = "";
+		this._tags = "";
+		this._camp = 0;
+	}
 	//Getting id
 	public int getID(){
 		return this._id;
@@ -39,22 +48,22 @@ public class Person {
 	}
 	
 	//Getting imageurl
-	public String getImageurl(){
+	public String getImageURL(){
 	return this._imageurl;
 	}
 		
 	//Setting imageurl
-	public void setImageurl(String imageurl){
+	public void setImageURL(String imageurl){
 	this._imageurl = imageurl;
 	}
 	
 	//Getting audiourl
-	public String getAudiourl(){
+	public String getAudioURL(){
 	return this._audiourl;
 	}
 		
 	//Setting audiourl
-	public void setAudiourl(String audiourl){
+	public void setAudioURL(String audiourl){
 	this._audiourl = audiourl;
 	}
 	
@@ -79,3 +88,4 @@ public class Person {
 	}
 
 }
+

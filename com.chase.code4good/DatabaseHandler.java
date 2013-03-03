@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_WORKERS = "workers";
 
     //Camps Table Columns names
-    private static final String KEY_ID = "id";
+    private static final String CAMP_KEY_ID = "id";
     private static final String KEY_FIRST_DATE = "firstDate";
     private static final String KEY_TYPE = "type";
     private static final String KEY_BADGE = "badge";
@@ -31,11 +31,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_LATITUDE = "latitude";
     private static final String KEY_LASTMODIFIED_DATE = "lastModifiedDate";
     private static final String KEY_LASTMODIFIED_PERSON = "lastModifiedPerson";
-    private static final String KEY_IMAGE_URL = "image_url";
+    private static final String CAMP_KEY_IMAGE_URL = "image_url";
 
     //Persons Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
+    private static final String PERSON_KEY_ID = "id";
+    private static final String PERSON_KEY_NAME = "name";
     private static final String KEY_IMAGE_URL = "image_url";
     private static final String KEY_AUDIO_URL = "audio_url";
     private static final String KEY_TAGS = "tags";
@@ -58,17 +58,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 " INTEGER," + KEY_LASTMODIFIED_DATE + " TEXT," + KEY_IMAGE_URL + " TEXT," + 
                 KEY_LONGTITUDE + " TEXT," + KEY_LATITUDE + " TEXT," + KEY_LASTMODIFIED_PERSON 
                 + " INTEGER," + " FOREIGN KEY (" + KEY_LASTMODIFIED_PERSON + ")	REFERENCES " + 
-<<<<<<< HEAD
-                TABLE_WORKERS + " (" + TABLE_WORKERS + "))";
-=======
-                TABLE_WORKERS + " (" + KEY_WORKER_ID + "))";
+                TABLE_WORKERS + " (" + TABLE_WORKERS + "))" + TABLE_WORKERS + " (" + KEY_ID + "))";
         String CREATE_PERSONS_TABLE = "CREATE TABLE " + TABLE_PERSONS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_IMAGE_URL +
                 " TEXT," + KEY_AUDIO_URL + " TEXT," + KEY_TAGS + " TEXT," + KEY_CAMP + "INTEGER, " + "FOREIGN KEY (" +
                 KEY_CAMP + ") REFERENCES " + TABLE_CAMPS + "))";
         String CREATE_WORKERS_TABLE = "CREATE TABLE" + TABLE_WORKERS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT" + ")";
->>>>>>> 0b19b560408a172692224cee64c8102a38b93856
+
         db.execSQL(CREATE_CAMPS_TABLE);
         db.execSQL(CREATE_WORKERS_TABLE);
         db.execSQL(CREATE_PERSONS_TABLE);
@@ -89,7 +86,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
  
     // Adding new camp
-    void addCamp(Camp camp) {
+    void addCamp(Camps camp) {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -137,7 +134,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting single CAMP
-    Camp getCamp(int id) {
+    Camps getCamp(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(TABLE_CAMPS, new String[] { KEY_ID,
@@ -147,8 +144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
  
-<<<<<<< HEAD
-        Camp camp = new Camp();
+        Camps camp = new Camps();
         camp.setId(Integer.parseInt(cursor.getString(0)));
         camp.setFirstDate(cursor.getString(1));
         camp.setType(cursor.getString(2));
@@ -158,12 +154,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         camp.setImgURL(cursor.getString(6));
         camp.setLastModifiedPerson(Integer.parseInt(cursor.getString(7)));
         
-        
-=======
-        Camp camp = new Camp(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5),
-                cursor.getString(6),Integer.parseInt(cursor.getString(7)), cursor.getString(8), cursor.getString(9));
->>>>>>> 0b19b560408a172692224cee64c8102a38b93856
+        Camps camp2 = new Camps(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), Integer.parseInt(cursor.getString(4)), cursor.getString(5),
+                cursor.getString(6),Integer.parseInt(cursor.getString(7)), cursor.getDouble(8), cursor.getDouble(9));
+
         // return camp
         return camp;
     }
@@ -185,8 +179,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return person;
     }
 
-    //Geting single worker
-    Person getWorker(int id){
+    //Getting single worker
+    Worker getWorker(int id){
         SQLiteDatabase db = this.getReadableDatabase();
  
         Cursor cursor = db.query(TABLE_WORKERS, new String[] { KEY_ID,
@@ -196,17 +190,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
  
         Worker worker = new Worker(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3));
         // return camp
         return worker;
     }
     // Getting All Camps
-<<<<<<< HEAD
-    public ArrayList<Camp> getAllContacts() {
-=======
-    public ArrayList<Camp> getAllCamps() {
->>>>>>> 0b19b560408a172692224cee64c8102a38b93856
-        ArrayList<Camp> campList = new ArrayList<Camp>();
+    public ArrayList<Camps> getAllCamps() {
+
+        ArrayList<Camps> campList = new ArrayList<Camps>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_CAMPS;
  
@@ -216,7 +207,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Camp camp = new Camp();
+                Camps camp = new Camps();
                 camp.setId(Integer.parseInt(cursor.getString(0)));
                 camp.setFirstDate(cursor.getString(1));
                 camp.setType(cursor.getString(2));
@@ -224,9 +215,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 camp.setNoPeople(Integer.parseInt(cursor.getString(4)));
                 camp.setDateLastModified(cursor.getString(5));
                 camp.setLastModifiedPerson(Integer.parseInt(cursor.getString(6)));
-                camp.setImageURL(cursor.getString(7));
-                camp.setLatitude(cursor.getString(8));
-                camp.setLongtitude(cursor.getString(9));
+                camp.setImgURL(cursor.getString(7));
+                camp.setLatitude(cursor.getDouble(8));
+                camp.setLongitude(cursor.getDouble(9));
                 // Adding camp to list
                 campList.add(camp);
             } while (cursor.moveToNext());
@@ -234,10 +225,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return CAMP list
         return campList;
     }
-
     //Getting All Persons
     public ArrayList<Person> getAllPersons(){
-        ArrayList<Camp> personList = new ArrayList<Person>();
+        ArrayList<Person> personList = new ArrayList<Person>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PERSONS;
  
@@ -251,7 +241,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 person.setImageURL(cursor.getString(2));
                 person.setAudioURL(cursor.getString(3));
                 person.setTags(cursor.getString(4));
-                person.setCamp(cursor.getString(5));
+                person.setCamp(cursor.getInt(5));
                 // Adding camp to list
                 personList.add(person);
             } while (cursor.moveToNext());
@@ -259,13 +249,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return personList;
     }
 
-    //Geting All persons in one camp
+    //Getting All persons in one camp
     public ArrayList<Person> getPersons(int id){
-        ArrayList<Camp> personList = new ArrayList<Person>();
+        ArrayList<Person> personList = new ArrayList<Person>();
+        SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(TABLE_PERSONS, new String[] { KEY_ID,
                 KEY_NAME, KEY_IMAGE_URL,KEY_AUDIO_URL, KEY_TAGS, KEY_CAMP}, KEY_CAMP + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
-        SQLiteDatabase db = this.getWritableDatabase();
         if (cursor.moveToFirst()) {
             do {
                 Person person = new Person();
@@ -274,7 +264,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 person.setImageURL(cursor.getString(2));
                 person.setAudioURL(cursor.getString(3));
                 person.setTags(cursor.getString(4));
-                person.setCamp(cursor.getString(5));
+                person.setCamp(cursor.getInt(5));
                 // Adding camp to list
                 personList.add(person);
             } while (cursor.moveToNext());
@@ -282,7 +272,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return personList;
     }
 
-    //Geting all workers
+    //Getting all workers
     public ArrayList<Worker> getAllWorkers(){
         ArrayList<Worker> workerList = new ArrayList<Worker>();
         // Select All Query
@@ -297,9 +287,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 worker.setName(cursor.getString(1));
             }while(cursor.moveToNext());
         }
+		return workerList;
     }
     // Updating single camp
-    public int updateCamp(Camp camp) {
+    public int updateCamp(Camps camp) {
         SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
@@ -307,27 +298,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_TYPE, camp.getType()); 
         values.put(KEY_BADGE, camp.getBadge()); 
         values.put(KEY_NO_PEOPLE, camp.getNoPeople()); 
-<<<<<<< HEAD
         values.put(KEY_LASTMODIFIED_DATE, camp.getLastModifiedDate().toString()); 
         values.put(KEY_IMAGE_URL, camp.getImgURL());
         values.put(KEY_LASTMODIFIED_PERSON, camp.getLastModifiedPerson()); 
         // updating row
         return db.update(TABLE_CAMPS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(camp.getId()) });
-=======
-        values.put(KEY_LASTMODIFIED_DATE, camp.getLastModifiedDate()); 
-        values.put(KEY_IMAGE_URL, camp.getImageURL());
-        values.put(KEY_LASTMODIFIED_PERSON, camp.getLastModifiedPerson());
-        values.put(KEY_LATITUDE,camp.getLatitude());
-        values.put(KEY_LONGTITUDE, camp.getLongtitude()); 
-        // updating row
-        return db.update(TABLE_CAMPS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(camp.getID()) });
     }
 
     //Updating single person
     public int updatePerson(Person person){
-        QLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, person.getName());
@@ -341,30 +322,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Updating single worker
     public int updateWorker(Worker worker){
-        QLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
  
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, worker.getName());
         return db.update(TABLE_WORKERS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(worker.getID()) });
->>>>>>> 0b19b560408a172692224cee64c8102a38b93856
+
     }
 
-    public void deleteCamp(Camp camp) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CAMPS, KEY_ID + " = ?",
-<<<<<<< HEAD
-                new String[] { String.valueOf(camp.getId()) });
-=======
-                new String[] { String.valueOf(camp.getID()) });
->>>>>>> 0b19b560408a172692224cee64c8102a38b93856
-        db.close();
+    public void deleteCamp(Camps camp) {
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	db.delete(TABLE_CAMPS, KEY_ID + " = ?",
+    			new String[] { String.valueOf(camp.getId()) });
+    	db.close();
     }
 
-    public void deletePerson(Person person){
+    public void deletePerson(Person p){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PERSONS, KEY_ID + " = ?",
-                new String[] { String.valueOf(person.getID()) });
+                new String[] { String.valueOf(p.getID()) });
         db.close();
     }
 
@@ -376,7 +353,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Getting camps Count
-    public int getCampsCount() {
+    public int getCampsCount(){
         String countQuery = "SELECT  * FROM " + TABLE_CAMPS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -397,8 +374,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    //Geeting workers count
-    public int getCampsCount() {
+    //Getting workers count
+    public int getWorkersCount() {
         String countQuery = "SELECT  * FROM " + TABLE_WORKERS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -407,5 +384,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
- 
+    
 }

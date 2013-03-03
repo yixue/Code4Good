@@ -12,8 +12,34 @@ public class Camps {
 	Calendar lastModifiedDate;
 	int lastModifiedPerson;
 	double latitude;
-	double longtitude;
+	double longitude;
 	
+	public Camps(int id, String firstDate, String type, String badge, int noPeople, String lastModifiedDate,
+			String imgURL, int lastModifiedPerson, double latitude, double longitude){
+		this.id = id;
+		this.firstDate = DateParser.parse(firstDate);
+		this.type = type;
+		this.badge = badge;
+		this.noPeople = noPeople;
+		this.imgURL = imgURL;
+		this.lastModifiedDate = DateParser.parse(lastModifiedDate);
+		this.lastModifiedPerson = lastModifiedPerson;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
+	public Camps(){
+		this.id = id;
+		this.firstDate = firstDate;
+		this.type = type;
+		this.badge = badge;
+		this.noPeople = noPeople;
+		this.imgURL = imgURL;
+		this.lastModifiedDate = lastModifiedDate;
+		this.lastModifiedPerson = lastModifiedPerson;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
 	/**
 	 Setter
 	 */
@@ -61,8 +87,8 @@ public class Camps {
 		this.latitude = latitude;
 	}
 	
-	public void setLongtitude(double longditude) {
-		this.longtitude = longtitude;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 	
 	
@@ -100,7 +126,11 @@ public class Camps {
 	}
 	
 	public double getLongtitude() {
-		return longtitude;
+		return longitude;
+	}
+	
+	public String getImgURL(){
+		return imgURL;
 	}
 	
 }
