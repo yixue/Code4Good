@@ -4,12 +4,12 @@ import java.util.*;
 
 public class Camps {
 	int id;
-	Date firstDate;
+	Calendar firstDate;
 	String type;
 	String badge;
 	int noPeople;
 	String imgURL;
-	Date lastModifiedDate;
+	Calendar lastModifiedDate;
 	int lastModifiedPerson;
 	
 	/**
@@ -19,7 +19,7 @@ public class Camps {
 		this.id = id;
 	}
 	
-	public void setFirstDate(Date firstDate) {
+	public void setFirstDate(Calendar firstDate) {
 		this.firstDate = firstDate;
 	}
 	
@@ -43,7 +43,7 @@ public class Camps {
 		this.imgURL = imgURL;
 	}
 	
-	public void setDateLastModified(Date lastModifiedDate) {
+	public void setDateLastModified(Calendar lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 	
@@ -60,7 +60,7 @@ public class Camps {
 		return id;
 	}
 	
-	public Date getFirstDate() {
+	public Calendar getFirstDate() {
 		return firstDate;
 	}
 	
@@ -71,12 +71,12 @@ public class Camps {
 	public String getBadge() {
 		return badge;
 	}
-	
+		
 	public int getNoPeople() {
 		return noPeople;
 	}
 	
-	public Date getLastModifiedDate() {
+	public Calendar getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 	
